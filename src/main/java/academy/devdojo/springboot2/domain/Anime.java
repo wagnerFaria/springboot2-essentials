@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class Anime {
+    private Long id;
     private String name;
 }

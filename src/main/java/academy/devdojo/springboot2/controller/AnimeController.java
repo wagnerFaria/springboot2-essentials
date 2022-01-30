@@ -1,6 +1,7 @@
 package academy.devdojo.springboot2.controller;
 
 import academy.devdojo.springboot2.domain.Anime;
+import academy.devdojo.springboot2.service.AnimeService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 public class AnimeController {
 
+    private AnimeService animeService;
+
     @GetMapping()
     public List<Anime> list() {
-        return Arrays.asList(
-                Anime.builder().name("Berserk").build(),
-                Anime.builder().name("Boku no Hero").build()
-        );
+        return animeService.listAll();
     }
 
 }
