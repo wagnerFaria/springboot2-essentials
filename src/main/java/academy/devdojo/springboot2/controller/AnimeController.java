@@ -44,5 +44,4 @@ public class AnimeController {
         animeService.replace(anime);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }
