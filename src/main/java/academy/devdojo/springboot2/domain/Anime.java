@@ -20,6 +20,6 @@ public class Anime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty
+    @NotEmpty(message = "The name of this anime cannot be empty")
     private String name;
 }
