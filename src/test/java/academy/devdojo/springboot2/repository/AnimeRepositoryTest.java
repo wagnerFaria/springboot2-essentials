@@ -1,6 +1,7 @@
 package academy.devdojo.springboot2.repository;
 
 import academy.devdojo.springboot2.domain.Anime;
+import academy.devdojo.springboot2.util.AnimeCreator;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,7 @@ class AnimeRepositoryTest {
     @DisplayName("Save persists animes when successfull")
     void save_PersistAnime_WhenSuccessfull() {
 
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -39,7 +40,7 @@ class AnimeRepositoryTest {
     @DisplayName("Save updates animes when successfull")
     void save_UpdatesAnime_WhenSuccessfull() {
 
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -58,7 +59,7 @@ class AnimeRepositoryTest {
     @DisplayName("Delete removes animes when successfull")
     void delete_RemovesAnime_WhenSuccessfull() {
 
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -73,7 +74,7 @@ class AnimeRepositoryTest {
     @DisplayName("Find by name returns list of animes when successfull")
     void findByName_ReturnListOfAnimes_WhenSuccessfull() {
 
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -110,9 +111,5 @@ class AnimeRepositoryTest {
                 .assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> this.animeRepository.save(animeToBeSaved))
                 .withMessageContaining("The name of this anime cannot be empty");
-    }
-
-    private Anime createAnime() {
-        return Anime.builder().name("Hajime no Ippo").build();
     }
 }
