@@ -40,7 +40,7 @@ public class AnimeService {
 
     @Transactional
     public Anime save(AnimePostRequestBody animePostRequestBody) {
-        Anime anime = AnimeMapper.INSTANCE.toAnime(animePostRequestBody);
+        Anime anime = Anime.builder().name(animePostRequestBody.getName()).build();
         return animeRepository.save(anime);
     }
 
@@ -50,7 +50,7 @@ public class AnimeService {
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         Anime savedAnime = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
-        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
+        Anime anime = savedAnime.toBuilder().id(animePutRequestBody.getId()).name(animePutRequestBody.getName()).build();
         anime.setId(savedAnime.getId());
         animeRepository.save(anime);
     }
