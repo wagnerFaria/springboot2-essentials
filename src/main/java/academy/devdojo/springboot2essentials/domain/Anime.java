@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class Anime {
 
+    private Long id;
     private String name;
 }
