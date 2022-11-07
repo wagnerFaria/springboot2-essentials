@@ -1,10 +1,12 @@
 package academy.devdojo.springboot2essentials.service;
 
 import academy.devdojo.springboot2essentials.domain.Anime;
+import academy.devdojo.springboot2essentials.mapper.AnimeMapper;
 import academy.devdojo.springboot2essentials.repository.AnimeRepository;
 import academy.devdojo.springboot2essentials.requests.AnimePostRequestBody;
 import academy.devdojo.springboot2essentials.requests.AnimePutRequestBody;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,7 +30,7 @@ public class AnimeService {
     }
 
     public Anime save(AnimePostRequestBody anime) {
-        return animeRepository.save(Anime.builder().name(anime.getName()).build());
+        return animeRepository.save(AnimeMapper.INSTANCE.toAnime(anime));
     }
 
     public void delete(Long id) {
@@ -37,6 +39,8 @@ public class AnimeService {
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         Anime savedAnime = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
-        animeRepository.save(savedAnime.toBuilder().name(animePutRequestBody.getName()).build());
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
+        anime.setId(savedAnime.getId());
+        animeRepository.save(anime);
     }
 }
