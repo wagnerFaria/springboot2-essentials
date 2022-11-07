@@ -8,7 +8,9 @@ import academy.devdojo.springboot2essentials.requests.AnimePutRequestBody;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -21,6 +23,10 @@ public class AnimeService {
 
     public List<Anime> listAll() {
         return animeRepository.findAll();
+    }
+
+    public List<Anime> findByName(@PathVariable String name) {
+        return animeRepository.findByName(name);
     }
 
     public Anime findByIdOrThrowBadRequestException(Long id) {
