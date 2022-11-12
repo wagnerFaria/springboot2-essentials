@@ -12,11 +12,11 @@ import java.util.List;
 public class SpringClient {
     public static void main(String[] args) {
         ResponseEntity<Anime> entity = new RestTemplate()
-                .getForEntity("http://localhost:8080/animes/{id}", Anime.class, 2);
+                .getForEntity("http://localhost:8080/animes/{id}", Anime.class, 1);
         log.info(entity);
 
         Anime anime = new RestTemplate()
-                .getForObject("http://localhost:8080/animes/{id}", Anime.class, 2);
+                .getForObject("http://localhost:8080/animes/{id}", Anime.class, 1);
         log.info(anime);
 
         ResponseEntity<List<Anime>> exchange = new RestTemplate()
@@ -39,6 +39,29 @@ public class SpringClient {
                         HttpMethod.POST,
                         new HttpEntity<>(samuraiChamploo, createHttpHeaders()), Anime.class);
         log.info("Saved Anime {}", samuraiChamplooSaved.getBody());
+
+        Anime animeToBeUpdated = samuraiChamplooSaved.getBody();
+        animeToBeUpdated.setName("Samurai Champloo 2");
+
+        ResponseEntity<Void> samuraiChamplooUpdated = new RestTemplate()
+                .exchange(
+                        "http://localhost:8080/animes",
+                        HttpMethod.PUT,
+                        new HttpEntity<>(animeToBeUpdated, createHttpHeaders()), Void.class);
+        log.info("Updated Anime {}", samuraiChamplooUpdated.getBody());
+
+        ResponseEntity<Void> samuraiChamplooDeleted = new RestTemplate()
+                .exchange(
+                        "http://localhost:8080/animes/{id}",
+                        HttpMethod.DELETE,
+                        null,
+                        Void.class,
+                        animeToBeUpdated.getId()
+                );
+
+        log.info("Deleted: {}", samuraiChamplooUpdated);
+
+
     }
 
     private static HttpHeaders createHttpHeaders() {
