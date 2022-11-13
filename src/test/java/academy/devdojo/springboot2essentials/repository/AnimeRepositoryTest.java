@@ -1,6 +1,7 @@
 package academy.devdojo.springboot2essentials.repository;
 
 import academy.devdojo.springboot2essentials.domain.Anime;
+import academy.devdojo.springboot2essentials.util.AnimeCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save persists anime when successful")
     void save_PersistAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(animeToBeSaved);
         Assertions.assertThat(savedAnime).isNotNull();
         Assertions.assertThat(savedAnime.getId()).isNotNull();
@@ -47,7 +48,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save updates anime when successful")
     void save_UpdatesAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(animeToBeSaved);
 
         savedAnime.setName("Overlord");
@@ -62,7 +63,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Delete removes anime when successful")
     void delete_RemovesAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(animeToBeSaved);
 
         this.animeRepository.delete(savedAnime);
@@ -75,7 +76,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Find by name returns list of anime when successful")
     void findByName_ReturnsListOfAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime savedAnime = this.animeRepository.save(animeToBeSaved);
 
         String name = savedAnime.getName();
@@ -96,7 +97,5 @@ class AnimeRepositoryTest {
         Assertions.assertThat(animes).isEmpty();
     }
 
-    private Anime createAnime() {
-        return Anime.builder().name("Hajime no Ippo").build();
-    }
+
 }
